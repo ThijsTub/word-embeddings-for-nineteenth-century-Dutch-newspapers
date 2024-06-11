@@ -10,14 +10,6 @@ from gensim.models import KeyedVectors
 import pandas as pd
 from tqdm import tqdm
 
-input_dir = r'D:\Thijs\Python\potatoPrograms\data\preprocessedTextPerYear'
-
-pathNames = []
-for (dirpath, dirnames, filenames) in walk(input_dir):
-    pathNames.extend(dirnames) 
-
-paths = [os.path.join('models', 'wordvectorsTimeline', pathName + '_wv.wordvectors') for pathName in pathNames]
-
 def getDfSimilarWords(wordsOfReference, paths, pathNames):
     similarWordsDf = pd.DataFrame()
     
@@ -37,22 +29,7 @@ def getDfSimilarWords(wordsOfReference, paths, pathNames):
             continue
         
     return similarWordsDf
-
-def getListSimilarWords(wordOfReference, paths, pathNames):
-    similarWords = []
-    for (path, pathName) in zip(paths, pathNames):
-        wv = KeyedVectors.load(path)
         
-        try:
-            for similarWord in wv.most_similar(wordOfReference, topn=68):
-                similarWords.append(list(similarWord)[0])
-        except KeyError:
-            continue
-        
-    return list(set(similarWords))
-        
-    
-
 def calculateCosineSimilarities(wordsOfInterest, wordsOfReference, paths, pathNames):    
     
     def getSimilarity(wordOfReference, wordOfInterest):
@@ -96,130 +73,24 @@ def calculateCosineSimilarities(wordsOfInterest, wordsOfReference, paths, pathNa
         
     return similaritiesDf
 
-wordsOfInterest = [
-    'gedroogde',
-    'klaver',
-    'knollen',
-    'veevoeder',
-    'druiven',
-    'gerooid',
-    'poters',
-    'spurrie',
-    'gerooid',
-    'meel',
-    'zaad',
-    'rot',
-    'ziekte',
-    'aardappelziekte',
-    'verderf',
-    'gezond',
-    'gezondheid',
-    'insect',
-    'veldmuizen',
-    'rups',
-    'wetenschap',
-    'kennis',
-    'proef',
-    'proefondervindelijk',
-    'smaak'
-    ]
-
-potatoWords = [
-    'aardappel', 
-    'aardappels', 
-    'aardappelen'
-         ]
-
-diseaseWords = [
-    'aardappelziekte'
-    ]
-
-wordsOfInterestWetenschap = [
-    'beschaving',
-    'befchaving',
-    'kunst',
-    'verlichting',
-    'godsvrucht',
-    'theoretische',
-    'theorie',
-    'theoretisch',
-    'praktische',
-    'praktijk',
-    'praktisch',
-    ]
-
-wordsToCompare = [
-    'jenever',
-    'voeder',
-    'meel',
-    'brood',
-    'ziekte',
-    'bederf',
-    'stank',
-    'smakelijk',
-    'verrot',
-    'mooi',
-    'overheerlijk',
-    'slakken',
-    'muizen',
-    'wormen',
-    'insekten',
-    'onkruid',
-    'aardappelziekte',
-    'worm',
-    'nachtvorsten',
-    'hazen',
-    'loof',
-    'vroege',
-    'zaad',
-    'wetenschap',
-    'landman',
-    'boer',
-    'bemeste',
-    'mest',
-    'gezaaid',
-    'bezaaijen',
-    'bezaaide',
-    'gemaaid',
-    'maaijen',
-    'bemest',
-    'bepoot',
-    'geteeld',
-    'gepoot',
-    'omgeploegd',
-    'gerooid',
-    'kalk',
-    'bearbeid',
-    'geoogst',
-    'gezaaide',
-    'uitgezaaid',
-    'gebakken',
-    'gezouten',
-    'gepelde',
-    'gekookt',
-    'gerookt',
-    'gedroogd',
-    'overgehouden',
-    'gestookt',
-    'gemalen',
-    'heete',
-    'flesschen',
-    'vaten',
-    'gewassen']
-
-wordsOfReferenceWetenschap = ['wetenschap', 'weienschap', 'wetenfehappen', 'wetenfehap', 'wetenschappen']
+# Define the reference and interest words
+potatoWords = ['aardappel', 'aardappels', 'aardappelen']
 wordsOfInterest = ['nederland', 'wetenschap', 'landman', 'verlichting', 'oeconomie', 'landbouw', 'statistiek', 'boer', 'hoogleraar']
 
-# similarWordsDf = getDfSimilarWords(['hoogleraar'], paths, pathNames)
-# similarWordsDf.to_csv('wordsSimilarToHoogleraar.csv', sep=';')
+# Set the input directory where word vector files are saved
+input_dir = r'D:\Thijs\Python\potatoPrograms\data\preprocessedTextPerYear' 
 
-# similarWordList = []
-# for wordOfInterest in tqdm(potatoWords):
-#     similarWordList += getListSimilarWords(wordOfInterest, [paths[3]], [pathNames[3]])
-# similarWordList = getListSimilarWords(['aardappelziekte'], [paths[3]], [pathNames[3]])
+# Give the names of the vectorfiles and build their related paths
+pathNames = ['1815-1824', '1825-1834', '1835-1844', '1845-49', '1850-54', '1855-59', '1860-64', '1865-1869', '1870-1874', '1875-1879'] 
+paths = [os.path.join('models', 'wordvectorsTimeline', pathName + '_wv.wordvectors') for pathName in pathNames]
 
+# Get the DataFrame of similar words and save it to a CSV file
+similarWordsDf = getDfSimilarWords(wordsOfInterest, paths, pathNames)
+similarWordsDf.to_csv('similarWords.csv', sep=';')
+
+# Calculate the cosine similarities and save the results to a CSV file
 similaritiesDf = calculateCosineSimilarities(wordsOfInterest, potatoWords, paths, pathNames)
-similaritiesDf.to_csv('timelineTargetedSearch02.csv', sep=';')
+similaritiesDf.to_csv('cosineSimilarities.csv', sep=';')
 
 
     
