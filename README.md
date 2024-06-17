@@ -1,1 +1,1 @@
-Scripts and word embeddings used for Thijs his potato thesis research (tbc)
+Scripts and word embeddings used for Thijs's potato thesis research (tbc)
