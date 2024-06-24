@@ -10,6 +10,7 @@ The scripts 'getMetadata', 'getData', and 'makeWordembeddings' were respectively
   1) create an excel metadata file that could be used to filter relevant newspaper articles;
   2) compile all text from relevant articles per year in textfiles;
   3) train word embeddings for timeframes of either 10 or 5 years depending on amount of data available.
+
 One could take inspiration from these scripts to construct word embeddings using the Delpher open newspaper archive.
 
 The word embeddings I created for my thesis research are uploaded to the map word embeddings. 
