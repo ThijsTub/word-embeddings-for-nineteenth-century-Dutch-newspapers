@@ -1,5 +1,3 @@
-Scripts and word embeddings used for Thijs Elfrink's potato thesis research. 
-
 This repository in first instance aims to document the scripts created for my thesis to clarify my research methodology. 
 The scripts and word embeddings may also be useful for anyone looking to conduct similar research as I did. 
 
