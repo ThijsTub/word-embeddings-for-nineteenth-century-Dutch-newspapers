@@ -13,14 +13,7 @@ from os import walk
 import os
 from tqdm import tqdm
 
-input_dir = r'D:\Thijs\Python\potatoPrograms\data\preprocessedTextPerYear'
-
-paths = []
-pathNames = []
-for (dirpath, dirnames, filenames) in walk(input_dir):
-    paths.extend(os.path.join('data', 'preprocessedTextPerYear', dirname) for dirname in dirnames)
-    pathNames.extend(dirnames)    
-
+# Epochlogger is used to track progress of word embedding creation
 class EpochLogger(CallbackAny2Vec):
 
     '''Callback to log information about training'''
@@ -44,6 +37,16 @@ class EpochLogger(CallbackAny2Vec):
 
 epoch_logger = EpochLogger()
 
+# I saved the data in folders for each timeframe I wanted to construct word embeddings for
+# Here I retrieve the names of the folders to locate the data and give a name to the word embeddings
+input_dir = r'D:\Thijs\Python\potatoPrograms\data\preprocessedTextPerYear' 
+paths = []
+pathNames = []
+for (dirpath, dirnames, filenames) in walk(input_dir):
+    paths.extend(os.path.join('data', 'preprocessedTextPerYear', dirname) for dirname in dirnames)
+    pathNames.extend(dirnames)    
+
+# Make word embeddings for each timeframe
 for (path, pathName) in tqdm(zip(paths, pathNames)):
     print(path)
 
