@@ -9,10 +9,7 @@ The scripts 'getMetadata', 'getData', and 'makeWordembeddings' were respectively
   2) compile all text from relevant articles per year in textfiles;
   3) train word embeddings for timeframes of either 10 or 5 years depending on amount of data available.
 
-One could take inspiration from these scripts to construct word embeddings using the Delpher open newspaper archive.
-
 The word embeddings I created for my thesis research are uploaded to the map 'wordembeddings'. 
 The script 'similarityResearch' was used to work with the word embeddings. 
-Without the need to construct word embeddings, one could use these for their own research purposes. 
 
 For more information about the methodology and overarching research, please see my thesis (to be uploaded in Utrecht University's thesis repository). 
